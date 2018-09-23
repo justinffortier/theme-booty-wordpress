@@ -31,3 +31,13 @@ add_action( 'wp_enqueue_scripts', 'bootstrap_assets' );
 */
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
+
+
+/*-----Ajax End Points----*/
+function fetch_product_data() {
+	require_once( get_template_directory() . '/models/Products.php' );
+	$Product_model = new Product_Model();
+	wp_send_json($Product_model->FetchProductData());
+}
+add_action( 'wp_ajax_fetch_product_data', 'fetch_product_data' );
+add_action( 'wp_ajax_nopriv_fetch_product_data', 'fetch_product_data' ); // If called from admin panel
